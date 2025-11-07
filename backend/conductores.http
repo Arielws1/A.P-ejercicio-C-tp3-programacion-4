@@ -1,0 +1,43 @@
+@url=http://localhost:3000
+@token=your_token_here
+
+### Lista todos los conductores
+GET {{url}}/conductores
+Authorization: Bearer {{token}}
+
+### Obtener un conductor por ID
+GET {{url}}/conductores/1
+Authorization: Bearer {{token}}
+
+### Crear un conductor
+POST {{url}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nombre": "Carlos",
+    "apellido": "García",
+    "dni": "12345678",
+    "licencia": "B12345",
+    "fecha_vencimiento_licencia": "2026-12-31"
+}
+
+### Modificar un conductor
+PUT {{url}}/conductores/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nombre": "Carlos",
+    "apellido": "García",
+    "dni": "12345678",
+    "licencia": "B12345",
+    "fecha_vencimiento_licencia": "2027-12-31"
+}
+
+### Eliminar un conductor
+DELETE {{url}}/conductores/1
+Authorization: Bearer {{token}}
+
+
+
