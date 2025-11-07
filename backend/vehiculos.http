@@ -1,0 +1,40 @@
+@url=http://localhost:3000
+@token=your_token_here
+
+### Listar todos los vehículos
+GET {{url}}/vehiculos
+Authorization: Bearer {{token}}
+
+### Obtener un vehículo por ID
+GET {{url}}/vehiculos/1
+Authorization: Bearer {{token}}
+
+### Crear un vehículo
+POST {{url}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "marca": "Ford",
+    "modelo": "Ranger",
+    "patente": "ABC123",
+    "año": 2020,
+    "capacidad_carga": 1500.50
+}
+
+### Modificar un vehículo
+PUT {{url}}/vehiculos/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "marca": "Ford",
+    "modelo": "Ranger",
+    "patente": "ABC123",
+    "año": 2021,
+    "capacidad_carga": 1600.00
+}
+
+### Eliminar un vehículo
+DELETE {{url}}/vehiculos/1
+Authorization: Bearer {{token}}

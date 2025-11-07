@@ -1,0 +1,62 @@
+@url=http://localhost:3000
+@token=your_token_here
+
+### Listar todos los viajes
+GET {{url}}/viajes
+Authorization: Bearer {{token}}
+
+### Obtener un viaje por ID
+GET {{url}}/viajes/1
+Authorization: Bearer {{token}}
+
+### Crear un viaje
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "vehiculo_id": 1,
+    "conductor_id": 1,
+    "fecha_salida": "2024-01-15T08:00:00",
+    "fecha_llegada": "2024-01-15T16:00:00",
+    "origen": "Buenos Aires",
+    "destino": "Córdoba",
+    "kilometros": 700.5,
+    "observaciones": "Viaje sin inconvenientes"
+}
+
+### Modificar un viaje
+PUT {{url}}/viajes/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "vehiculo_id": 1,
+    "conductor_id": 1,
+    "fecha_salida": "2024-01-15T08:00:00",
+    "fecha_llegada": "2024-01-15T17:00:00",
+    "origen": "Buenos Aires",
+    "destino": "Córdoba",
+    "kilometros": 700.5,
+    "observaciones": "Viaje con retraso"
+}
+
+### Eliminar un viaje
+DELETE {{url}}/viajes/1
+Authorization: Bearer {{token}}
+
+### Consultar historial de viajes por vehículo
+GET {{url}}/viajes/vehiculo/1
+Authorization: Bearer {{token}}
+
+### Consultar historial de viajes por conductor
+GET {{url}}/viajes/conductor/1
+Authorization: Bearer {{token}}
+
+### Calcular total de kilómetros por vehículo
+GET {{url}}/viajes/vehiculo/1/kilometros
+Authorization: Bearer {{token}}
+
+### Calcular total de kilómetros por conductor
+GET {{url}}/viajes/conductor/1/kilometros
+Authorization: Bearer {{token}}
