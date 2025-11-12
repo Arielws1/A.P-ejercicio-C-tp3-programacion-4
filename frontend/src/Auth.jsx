@@ -1,12 +1,15 @@
 import { createContext, useContext, useState } from "react";
 
-
+// Contexto para compartir el estado de autenticacion/autorizacion
 const AuthContext = createContext(null);
-
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth debe ser usado dentro de un AuthProvider");
+  }
+  return context;
 };
 
 export const AuthProvider = ({ children }) => {
@@ -84,5 +87,10 @@ export const AuthPage = ({ children }) => {
     return <h2>Ingrese para ver esta pagina</h2>;
   }
 
-  return children;
+  return <>{children}</>;
 };
+
+
+
+
+
