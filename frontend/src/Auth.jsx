@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import PropTypes from "prop-types";
 
 // Contexto para compartir el estado de autenticacion/autorizacion
 const AuthContext = createContext(null);
@@ -79,6 +80,10 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 // Muestra un mensaje si el usuario no esta logeado
 export const AuthPage = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -90,7 +95,6 @@ export const AuthPage = ({ children }) => {
   return <>{children}</>;
 };
 
-
-
-
-
+AuthPage.propTypes = {
+  children: PropTypes.node.isRequired,
+};
