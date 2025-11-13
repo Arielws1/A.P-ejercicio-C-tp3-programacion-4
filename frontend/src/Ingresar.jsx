@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "./Auth";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export const Ingresar = () => {
   const { error, login } = useAuth();
+  const location = useLocation();
 
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Cerrar el diálogo cuando cambia la ruta
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

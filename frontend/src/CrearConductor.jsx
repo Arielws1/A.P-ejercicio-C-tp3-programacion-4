@@ -20,24 +20,31 @@ export const CrearConductor = () => {
 
     setErrores(null);
 
-    const response = await fetchAuth("http://localhost:3000/conductores", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
+    try {
+      const response = await fetchAuth("http://localhost:3000/conductores", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok || !data.success) {
-      if (response.status === 400) {
-        if (data.errores) {
-          return setErrores(data.errores);
+      if (!response.ok || !data.success) {
+        if (response.status === 400) {
+          if (data.errores) {
+            return setErrores(data.errores);
+          }
+          return window.alert(data.error || "Error al crear conductor");
         }
-        return window.alert(data.error || "Error al crear conductor");
+        return window.alert(
+          data.error || data.message || "Error al crear conductor"
+        );
       }
-      return window.alert("Error al crear conductor");
+      navigate("/conductores");
+    } catch (error) {
+      console.error("Error al crear conductor:", error);
+      window.alert("Error al crear conductor: " + error.message);
     }
-    navigate("/conductores");
   };
 
   return (
