@@ -3,7 +3,7 @@ import { useAuth } from "./Auth";
 import { Link, useLocation } from "react-router";
 
 export const Ingresar = () => {
-  const { error, login } = useAuth();
+  const { error, login, setError } = useAuth();
   const location = useLocation();
 
   const [open, setOpen] = useState(false);
@@ -15,17 +15,36 @@ export const Ingresar = () => {
     setOpen(false);
   }, [location.pathname]);
 
+    // Limpiar error cuando se abre el diálogo
+  const handleOpen = () => {
+    if (setError) setError(null);
+    setOpen(true);
+  };
+
+  // Limpiar error cuando cambian los campos
+  const handleEmailChange = (e) => {
+    if (setError) setError(null);
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    if (setError) setError(null);
+    setPassword(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await login(email, password);
     if (result.success) {
       setOpen(false);
+      setEmail("");
+      setPassword("");
     }
   };
 
   return (
     <>
-      <button onClick={() => setOpen(true)}>Ingresar</button>
+      <button onClick={handleOpen}>Ingresar</button>
       <dialog open={open}>
         <article>
           <h2>Ingrese email y contraseña</h2>
@@ -37,7 +56,7 @@ export const Ingresar = () => {
                 type="email"
                 required
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
               />
               <label htmlFor="password">Contraseña:</label>
               <input
@@ -45,7 +64,7 @@ export const Ingresar = () => {
                 type="password"
                 required
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
               />
               {error && <p style={{ color: "red" }}>{error}</p>}
             </fieldset>

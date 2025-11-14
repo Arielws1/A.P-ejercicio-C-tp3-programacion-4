@@ -14,6 +14,7 @@ export function authConfig() {
   const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.JWT_SECRET,
+    ignoreExpiration: false, // se verifica la expiración del token
   };
 
   // Creo estrategia jwt
@@ -26,9 +27,25 @@ export function authConfig() {
   );
 }
 
-export const verificarAutenticacion = passport.authenticate("jwt", {
-  session: false,
-});
+// Middleware para verificar autenticación con manejo de errores
+export const verificarAutenticacion = (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    if (err) {
+      return res.status(401).json({
+        success: false,
+        error: "Token inválido o expirado. Por favor, inicie sesión nuevamente.",
+      });
+    }
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        error: "Token inválido o expirado. Por favor, inicie sesión nuevamente.",
+      });
+    }
+    req.user = user;
+    next();
+  })(req, res, next);
+};
 
 // Registro de usuario
 router.post(

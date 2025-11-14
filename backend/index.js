@@ -28,6 +28,22 @@ app.use("/vehiculos", vehiculosRouter);
 app.use("/conductores", conductoresRouter);
 app.use("/viajes", viajesRouter);
 
+// Middleware para manejar errores de autenticación
+app.use((err, req, res, next) => {
+  if (err.name === "UnauthorizedError" || err.name === "JsonWebTokenError" || err.name === "TokenExpiredError") {
+    return res.status(401).json({
+      success: false,
+      error: "Token inválido o expirado. Por favor, inicie sesión nuevamente.",
+    });
+  }
+  // Manejo de errores del servidor (500)
+  console.error("Error del servidor:", err);
+  res.status(500).json({
+    success: false,
+    error: "Error interno del servidor",
+  });
+});
+
 app.listen(port, () => {
   console.log(`La aplicación está funcionando en el puerto ${port}`);
 });

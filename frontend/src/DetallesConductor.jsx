@@ -88,7 +88,11 @@ export const DetallesConductor = () => {
           <tr>
             <th>Vencimiento de Licencia</th>
             <td>
-              {new Date(conductor.fecha_vencimiento_licencia).toLocaleDateString()}
+              {new Date(conductor.fecha_vencimiento_licencia).toLocaleDateString('es-AR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+              })}
             </td>
           </tr>
           {kilometros !== null && (

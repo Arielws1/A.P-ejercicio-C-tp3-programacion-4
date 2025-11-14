@@ -75,7 +75,13 @@ export function Conductores() {
               <td>{c.apellido}</td>
               <td>{c.dni}</td>
               <td>{c.licencia}</td>
-              <td>{new Date(c.fecha_vencimiento_licencia).toLocaleDateString()}</td>
+              <td>
+                {new Date(c.fecha_vencimiento_licencia).toLocaleDateString('es-AR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric'
+                })}
+              </td>
               <td>
                 <div>
                   <Link role="button" to={`/conductores/${c.id}`}>

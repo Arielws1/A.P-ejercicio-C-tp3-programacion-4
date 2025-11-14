@@ -56,10 +56,22 @@ export const AuthProvider = ({ children }) => {
       throw new Error("No esta iniciada la session");
     }
 
-    return fetch(url, {
+    const response = await fetch(url, {
       ...options,
       headers: { ...options.headers, Authorization: `Bearer ${token}` },
     });
+
+    // Si el token expiró o es inválido, hacer logout automático
+    if (response.status === 401) {
+      logout();
+      // Redirigir a la página de inicio si estamos en una ruta protegida
+      if (window.location.pathname !== "/" && !window.location.pathname.includes("/registro")) {
+        window.location.href = "/";
+      }
+      throw new Error("Sesión expirada. Por favor, inicie sesión nuevamente.");
+    }
+
+    return response;
   };
 
   return (
